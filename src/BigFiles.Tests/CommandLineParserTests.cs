@@ -19,7 +19,7 @@ namespace BigFiles.Tests
         [Fact]
         public void CountStringProvided_ReturnsCountOperation()
         {
-            var result = parser.Parse(@"input.txt /count");
+            var result = parser.Parse(@"input.txt", "/count");
 
             Assert.IsType<CountOperation>(result);
         }
@@ -27,7 +27,7 @@ namespace BigFiles.Tests
         [Fact]
         public void ReplaceWithParametersProvided()
         {
-            var result = parser.Parse(@"input.txt /replace john tim");
+            var result = parser.Parse(@"input.txt", "/replace", "john", "tim");
 
             Assert.IsType<ReplaceOperation>(result);
         }
@@ -35,7 +35,7 @@ namespace BigFiles.Tests
         [Fact]
         public void FilterWithParametersProvided()
         {
-            var result = parser.Parse(@"input.txt /filter john");
+            var result = parser.Parse(@"input.txt", "/filter", "john");
 
             Assert.IsType<FilterOperation>(result);
         }
@@ -44,7 +44,7 @@ namespace BigFiles.Tests
         [Fact]
         public void Compound()
         {
-            var result = parser.Parse(@"input.txt /replace john tim /filter cat /count");
+            var result = parser.Parse(@"input.txt", "/replace", "john", "tim", "/filter", "cat", "/count");
 
             Assert.IsType<CountOperation>(result);
         }

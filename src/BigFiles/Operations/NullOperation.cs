@@ -36,7 +36,7 @@ namespace BigFiles.Operations
 
             if (!FileSystem.File.Exists(path))
             {
-                throw new FileNotFoundException("Could not find input file", path);
+         //       throw new FileNotFoundException("Could not find input file", path);
             }
         }
 

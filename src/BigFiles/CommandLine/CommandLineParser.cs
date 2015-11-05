@@ -3,6 +3,9 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Serilog;
+using System.Text.RegularExpressions;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace BigFiles.CommandLine
 {
@@ -12,32 +15,47 @@ namespace BigFiles.CommandLine
 
         static CommandLineParser()
         {
-           var types = Assembly.GetAssembly(typeof(CommandLineParser)).DefinedTypes;
+            var types = Assembly.GetAssembly(typeof(CommandLineParser)).DefinedTypes;
             OperationTypes = types.ToList().Where(t => typeof(FileOperationBase).IsAssignableFrom(t)).ToArray();
         }
 
-        public IFileOperation Parse(string inputArgs)
+        public static Regex InputRegex = new Regex(@"\w+?");
+
+        public IFileOperation Parse(params string[] inputArgs)
         {
-            Log.Information("Parsing {0}", inputArgs);
-            IFileOperation lastOperation = null;
-            var tokens = inputArgs.Split('/');
+            var filename = inputArgs[0];
+            // skip filename
+            var arguments = inputArgs.Skip(1).ToList();
 
-            lastOperation = new NullOperation(tokens[0]);
+            var args = arguments
+                // store original indexes
+                .Select((item, index) => new { item, index })
+                .Where(e => e.item.StartsWith("/"))
+                .Select(e => new
+                {
+                    name = e.item.Substring(1),
+                    args = arguments
+                        // find operation element in arguments
+                        .Skip(e.index + 1)
+                        // take all elements until next operation
+                        .TakeWhile(item => !item.StartsWith("/"))
+                        .ToArray()
+                });
 
-            for (int index =1 ; index < tokens.Length; index++)
-            {
-                var operationWithArgs = (tokens[index] ?? "").Trim().Split(' ');
-                lastOperation = ParseToken(operationWithArgs, lastOperation);
-            }
+            IFileOperation lastOperation = new NullOperation(filename);
+
+            args.ToList().ForEach(op =>{
+                lastOperation = ParseToken(op.name, op.args, lastOperation);
+            });
+
 
             return lastOperation;
         }
 
-        private IFileOperation ParseToken(string[] operationWithArgs, IFileOperation lastOperation)
+        private IFileOperation ParseToken(string operationName, string[] arguments, IFileOperation lastOperation)
         {
-            var operationName = operationWithArgs[0];
             Log.Debug("Parsing input for operation {0}", operationName);
-            var constuctorArgs = (new object[] { lastOperation }).Union(operationWithArgs.Skip(1)).ToArray();
+            var constuctorArgs = (new object[] { lastOperation }).Union(arguments).ToArray();
             var operationType = OperationTypes.FirstOrDefault(type => type.Name.ToLower().StartsWith(operationName));
             if (operationType != null)
             {

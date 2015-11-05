@@ -14,11 +14,10 @@ namespace BigFiles
             ConfigureLogging();
 
             var parser = new CommandLineParser();
-            var input = string.Join(" ", args);
 
             try
             {
-                var operation = parser.Parse(input);
+                var operation = parser.Parse(args);
                 operation.ReadLines().ToList();
                 operation.Execute();
             }
