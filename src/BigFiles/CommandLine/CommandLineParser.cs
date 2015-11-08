@@ -23,6 +23,11 @@ namespace BigFiles.CommandLine
 
         public IFileOperation Parse(params string[] inputArgs)
         {
+            if(inputArgs == null)
+            {
+                throw new ArgumentNullException("args");
+            }
+            
             var filename = inputArgs[0];
             // skip filename
             var arguments = inputArgs.Skip(1).ToList();

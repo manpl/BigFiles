@@ -1,5 +1,7 @@
 ﻿using BigFiles.CommandLine;
 using BigFiles.Operations;
+using System.Collections.Generic;
+using System.IO.Abstractions.TestingHelpers;
 using Xunit;
 
 namespace BigFiles.Tests
@@ -7,6 +9,14 @@ namespace BigFiles.Tests
     public class CommandLineParserTests
     {
         private CommandLineParser parser = new CommandLineParser();
+
+        public CommandLineParserTests()
+        {
+            NullOperation.FileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+             {
+                { @"input.txt", new MockFileData("Some content") }
+            });
+        }
 
         [Fact]
         public void OnlyFileNameProvided_ReturnsNullOperation()
