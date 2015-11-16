@@ -21,7 +21,7 @@ namespace BigFiles.CommandLine
 
         public static Regex InputRegex = new Regex(@"\w+?");
 
-        public IFileOperation Parse(params string[] inputArgs)
+        public IOperation Parse(params string[] inputArgs)
         {
             if(inputArgs == null)
             {
@@ -47,7 +47,7 @@ namespace BigFiles.CommandLine
                         .ToArray()
                 });
 
-            IFileOperation lastOperation = new NullOperation(filename);
+            IOperation lastOperation = new NullOperation(filename);
 
             args.ToList().ForEach(op =>{
                 lastOperation = ParseToken(op.name, op.args, lastOperation);
@@ -57,14 +57,14 @@ namespace BigFiles.CommandLine
             return lastOperation;
         }
 
-        private IFileOperation ParseToken(string operationName, string[] arguments, IFileOperation lastOperation)
+        private IOperation ParseToken(string operationName, string[] arguments, IOperation lastOperation)
         {
-            Log.Debug("Parsing input for operation {0}", operationName);
+            Log.Debug("Parsing input for operation {operation}", operationName);
             var constuctorArgs = (new object[] { lastOperation }).Union(arguments).ToArray();
             var operationType = OperationTypes.FirstOrDefault(type => type.Name.ToLower().StartsWith(operationName));
             if (operationType != null)
             {
-                return (IFileOperation)Activator.CreateInstance(operationType, constuctorArgs);
+                return (IOperation)Activator.CreateInstance(operationType, constuctorArgs);
             }
 
             throw new ParsingException(operationName ?? "");

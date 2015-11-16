@@ -6,7 +6,7 @@ using System.IO.Abstractions;
 namespace BigFiles.Operations
 {
     [Usage("/null")]
-    public class NullOperation : IFileOperation
+    public class NullOperation : IOperation
     {
         private string path;
         private static IFileSystem fs;
@@ -31,7 +31,7 @@ namespace BigFiles.Operations
 
         public NullOperation(string path)
         {
-            Log.Debug("NullOperation for {0}", path);
+            Log.Debug("NullOperation for {path}", path);
             this.path = path;
 
             if (!FileSystem.File.Exists(path))

@@ -9,7 +9,7 @@ namespace BigFiles.Operations
     [Usage("/output")]
     public class OutputOperation : FileOperationBase
     {
-        public OutputOperation(IFileOperation parent)
+        public OutputOperation(IOperation parent)
             : base(parent)
         {
         }

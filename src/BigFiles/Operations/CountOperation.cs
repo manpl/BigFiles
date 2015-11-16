@@ -10,9 +10,9 @@ namespace BigFiles.Operations
     public class CountOperation : FileOperationBase
     {
         private int count = 0;
-        private IFileOperation parent;
+        private IOperation parent;
 
-        public CountOperation(IFileOperation parent)
+        public CountOperation(IOperation parent)
             : base(parent)
         {
             this.parent = parent;

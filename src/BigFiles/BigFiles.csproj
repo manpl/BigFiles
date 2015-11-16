@@ -59,6 +59,8 @@
     <Compile Include="CommandLine\ParsingException.cs" />
     <Compile Include="InputLine.cs" />
     <Compile Include="Logging\ThreadIdEnricher.cs" />
+    <Compile Include="Operations\FileOutputOperation.cs" />
+    <Compile Include="Operations\ConsoleOutputOperation.cs" />
     <Compile Include="Operations\CountOperation.cs" />
     <Compile Include="Operations\FilterOperation.cs" />
     <Compile Include="Operations\NullOperation.cs" />

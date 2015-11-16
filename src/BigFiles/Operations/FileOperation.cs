@@ -1,41 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Abstractions;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace BigFiles.Operations
 {
-
-    public interface IFileOperation
+    [Usage("/ConsoleOutput")]
+    public class FileOperation : FileOperationBase
     {
-        IEnumerable<InputLine> ReadLines();
-        void Execute();
-    }
-
-    [Usage("/xx")]
-    public abstract class FileOperationBase : IFileOperation
-    {
-        private IFileOperation parent;
-        protected IFileOperation Parent
+        private static IFileSystem fs;
+        public static IFileSystem FileSystem
         {
-            get
-            {
-                return parent;
-            }
+            get { return fs; }
             set
             {
                 if (value == null)
                 {
-                    throw new ArgumentException("Parent");
+                    throw new ArgumentNullException("FileSystem");
                 }
 
-                this.parent = value;
+                fs = value;
             }
         }
 
-        public FileOperationBase(IFileOperation parent)
+        private string Path { get; set; }
+
+        public FileOperation(IOperation parent, String path)
+            : base(parent)
         {
-            Parent = parent;
+            FileSystem = new System.IO.Abstractions.FileSystem();
+            Path = path;
         }
 
-        public abstract IEnumerable<InputLine> ReadLines();
-        public abstract void Execute();
+        public override IEnumerable<InputLine> ReadLines()
+        {
+            using (var writer = FileSystem.File.OpenWrite(Path))
+            {
+                using (var streamWriter = new StreamWriter(writer))
+                {
+                    foreach (var line in Parent.ReadLines())
+                    {
+                        streamWriter.WriteLine(line.Content);
+                        yield return line;
+                    }
+                }
+            }
+        }
+
+        public override void Execute()
+        {
+            Parent.Execute();
+        }
     }
 }

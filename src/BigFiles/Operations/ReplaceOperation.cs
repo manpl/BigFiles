@@ -12,7 +12,7 @@ namespace BigFiles.Operations
         private string from;
         private string to;
 
-        public ReplaceOperation(IFileOperation operation, string from, string to)
+        public ReplaceOperation(IOperation operation, string from, string to)
             : base(operation)
         {
             this.from = from;
