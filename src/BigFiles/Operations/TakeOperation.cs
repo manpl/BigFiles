@@ -19,10 +19,5 @@ namespace BigFiles.Operations
         {
             return this.Parent.ReadLines().Take(NoToTake);
         }
-
-        public override void Execute()
-        {
-            this.Parent.Execute();
-        }
     }
 }

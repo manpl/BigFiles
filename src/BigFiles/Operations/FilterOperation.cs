@@ -27,10 +27,5 @@ namespace BigFiles.Operations
                 }
             }
         }
-
-        public override void Execute()
-        {
-            Parent.Execute();
-        }
     }
 }

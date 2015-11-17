@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BigFiles.Operations
 {
-    [Usage("/ConsoleOutput")]
+    [Usage("/FileOutput")]
     public class FileOperation : FileOperationBase
     {
         private static IFileSystem fs;
@@ -48,11 +48,6 @@ namespace BigFiles.Operations
                     }
                 }
             }
-        }
-
-        public override void Execute()
-        {
-            Parent.Execute();
         }
     }
 }

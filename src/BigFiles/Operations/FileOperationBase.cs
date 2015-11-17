@@ -6,7 +6,6 @@ namespace BigFiles.Operations
     public interface IOperation
     {
         IEnumerable<InputLine> ReadLines();
-        void Execute();
     }
 
     [Usage("/xx")]
@@ -36,6 +35,5 @@ namespace BigFiles.Operations
         }
 
         public abstract IEnumerable<InputLine> ReadLines();
-        public abstract void Execute();
     }
 }

@@ -56,9 +56,5 @@ namespace BigFiles.Operations
                 }
             }
         }
-
-        public void Execute()
-        {
-        }
     }
 }

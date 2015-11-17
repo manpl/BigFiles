@@ -65,7 +65,6 @@
     <Compile Include="Operations\FilterOperation.cs" />
     <Compile Include="Operations\NullOperation.cs" />
     <Compile Include="Operations\FileOperationBase.cs" />
-    <Compile Include="Operations\OutputOperation.cs" />
     <Compile Include="Operations\ReplaceOperation.cs" />
     <Compile Include="Operations\SkipOperation.cs" />
     <Compile Include="Operations\TakeOperation.cs" />

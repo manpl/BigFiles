@@ -25,12 +25,8 @@ namespace BigFiles.Operations
                count++;
                yield return item;
            }
-        }
 
-        public override void Execute()
-        {
-            Parent.Execute();
-            Console.WriteLine("Count: {0}\n", count);
+           Console.WriteLine("Count: {0}\n", count);
         }
     }
 }

@@ -27,9 +27,5 @@ namespace BigFiles.Operations
                 yield return line;
             }
         }
-
-        public override void Execute()
-        {
-        }
     }
 }

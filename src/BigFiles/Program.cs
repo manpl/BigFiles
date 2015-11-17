@@ -12,7 +12,7 @@ namespace BigFiles
 {
     class Program
     {
-        static void Main(string[] args)
+        static int Main(string[] args)
         {
             ConfigureLogging();
 
@@ -22,17 +22,19 @@ namespace BigFiles
             {
                 var operation = parser.Parse(args);
                 operation.ReadLines().ToList();
-                operation.Execute();
             }
-            catch (ParsingException ex)
+            catch (CommandLineException ex)
             {
-                Log.Error("Unrecognized command line input: {0}, exception: {1}", ex.Token, ex.ToString());
+                Log.Error("Error: {message}",  ex.Message);
                 parser.PrintUsage();
             }
             catch (Exception ex)
             {
-                Log.Error("Exception: {0}", ex.ToString());
+                Log.Error("Exception: {exception}", ex.ToString());
+                return -1;
             }
+
+            return 0;
         }
 
         private static void ConfigureLogging()

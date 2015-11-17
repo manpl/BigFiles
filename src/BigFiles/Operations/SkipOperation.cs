@@ -16,10 +16,5 @@ namespace BigFiles.Operations
         {
             return this.Parent.ReadLines().Skip(NoToSkip);
         }
-
-        public override void Execute()
-        {
-            Parent.Execute();
-        }
     }
 }

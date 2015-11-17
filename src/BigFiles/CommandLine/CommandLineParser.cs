@@ -60,14 +60,32 @@ namespace BigFiles.CommandLine
         private IOperation ParseToken(string operationName, string[] arguments, IOperation lastOperation)
         {
             Log.Debug("Parsing input for operation {operation}", operationName);
-            var constuctorArgs = (new object[] { lastOperation }).Union(arguments).ToArray();
+            var constuctorArgs = (new object[] { lastOperation }).Concat(arguments).ToArray();
             var operationType = OperationTypes.FirstOrDefault(type => type.Name.ToLower().StartsWith(operationName));
             if (operationType != null)
             {
-                return (IOperation)Activator.CreateInstance(operationType, constuctorArgs);
+                try
+                {
+                    Log.Debug("Operation found: {operation}", operationType.Name);
+                    return (IOperation)Activator.CreateInstance(operationType, constuctorArgs);
+                }
+                catch (MissingMethodException ex)
+                {
+
+                    var message = String.Format("Cannot create operation with specified arguments: [{0}]", String.Join(",", arguments));
+                    var hint = "HINT:";
+                    var availableConstructors = operationType.GetConstructors();
+                    foreach (var c in availableConstructors)
+                    {
+                        var args = c.GetParameters().Skip(1).Select(arg => arg.Name).ToArray();
+                        hint += String.Format("\nAvailable set of arguments for {0} is {1}", operationType.Name, String.Join(",", args));
+                    }
+
+                    throw new CommandLineException(message, hint, ex);
+                }
             }
 
-            throw new ParsingException(operationName ?? "");
+            throw new CommandLineException(String.Format("Unrecognized command line input: {0}", operationName));
         }
 
         public void PrintUsage()
