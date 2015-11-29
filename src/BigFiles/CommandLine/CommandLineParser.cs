@@ -6,6 +6,7 @@ using Serilog;
 using System.Text.RegularExpressions;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BigFiles.CommandLine
 {
@@ -23,14 +24,31 @@ namespace BigFiles.CommandLine
 
         public IOperation Parse(params string[] inputArgs)
         {
+            Log.Information("Received: {inputArgs}", inputArgs);
+
+            var startIndex = 0;
+            string filename = null;
+            IOperation lastOperation = null;
+
             if(inputArgs == null)
             {
                 throw new ArgumentNullException("args");
             }
-            
-            var filename = inputArgs[0];
+
+            if (!inputArgs[0].StartsWith("/"))
+            {
+                startIndex = 1;
+                filename = inputArgs[0];
+                lastOperation = new FileReader(filename);
+            }
+            else
+            {
+                startIndex = 0;
+                lastOperation = new CommandLineReader();
+            }
+            filename = inputArgs[0];
             // skip filename
-            var arguments = inputArgs.Skip(1).ToList();
+            var arguments = inputArgs.Skip(startIndex).ToArray();
 
             var args = arguments
                 // store original indexes
@@ -47,12 +65,11 @@ namespace BigFiles.CommandLine
                         .ToArray()
                 });
 
-            IOperation lastOperation = new NullOperation(filename);
 
             args.ToList().ForEach(op =>{
+                Log.Debug("Operation: {name}, Args: {args}", op.name, op.args);
                 lastOperation = ParseToken(op.name, op.args, lastOperation);
             });
-
 
             return lastOperation;
         }

@@ -5,8 +5,7 @@ using System.IO;
 using System.IO.Abstractions;
 namespace BigFiles.Operations
 {
-    [Usage("/null")]
-    public class NullOperation : IOperation
+    public class FileReader: IOperation
     {
         private string path;
         private static IFileSystem fs;
@@ -24,12 +23,12 @@ namespace BigFiles.Operations
             }
         }
 
-        static NullOperation()
+        static FileReader()
         {
             FileSystem = new System.IO.Abstractions.FileSystem();
         }
 
-        public NullOperation(string path)
+        public FileReader(string path)
         {
             Log.Debug("NullOperation for {path}", path);
             this.path = path;

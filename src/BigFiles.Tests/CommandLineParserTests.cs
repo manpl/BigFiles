@@ -12,7 +12,7 @@ namespace BigFiles.Tests
 
         public CommandLineParserTests()
         {
-            NullOperation.FileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
+            FileReader.FileSystem = new MockFileSystem(new Dictionary<string, MockFileData>
              {
                 { @"input.txt", new MockFileData("Some content") }
             });
@@ -23,7 +23,7 @@ namespace BigFiles.Tests
         {
             var result = parser.Parse(@"input.txt");
 
-            Assert.IsType<NullOperation>(result);
+            Assert.IsType<FileReader>(result);
         }
 
         [Fact]
