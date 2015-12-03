@@ -1,5 +1,6 @@
 ﻿using BigFiles.CommandLine;
 using BigFiles.Operations;
+using System;
 using System.Collections.Generic;
 using System.IO.Abstractions.TestingHelpers;
 using Xunit;
@@ -19,11 +20,24 @@ namespace BigFiles.Tests
         }
 
         [Fact]
-        public void OnlyFileNameProvided_ReturnsNullOperation()
+        public void FileNameProvided_FileReaderReturned()
         {
             var result = parser.Parse(@"input.txt");
-
             Assert.IsType<FileReader>(result);
+        }
+
+        [Fact]
+        public void NothingProvided_Parse_ThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() => parser.Parse());
+        }
+
+        [Fact]
+        public void FileNameProvided_ConsoleReaderReturned()
+        {
+            FileOperationBase result = (FileOperationBase) parser.Parse("/console");
+
+            Assert.IsType<CommandLineReader>(result.Parent);
         }
 
         [Fact]
@@ -58,6 +72,5 @@ namespace BigFiles.Tests
 
             Assert.IsType<CountOperation>(result);
         }
-
     }
 }

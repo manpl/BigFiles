@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BigFiles.Operations
 {
-    class CommandLineReader : IOperation
+    public class CommandLineReader : IOperation
     {
         public IEnumerable<InputLine> ReadLines()
         {

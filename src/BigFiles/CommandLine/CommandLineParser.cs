@@ -25,15 +25,24 @@ namespace BigFiles.CommandLine
         public IOperation Parse(params string[] inputArgs)
         {
             Log.Information("Received: {inputArgs}", inputArgs);
-
-            var startIndex = 0;
-            string filename = null;
-            IOperation lastOperation = null;
-
+            
             if(inputArgs == null)
             {
                 throw new ArgumentNullException("args");
             }
+            if (inputArgs.Length == 0)
+            {
+                throw new ArgumentException("args");
+            }
+
+            return ParseImpl(inputArgs);
+        }
+
+        private IOperation ParseImpl(string[] inputArgs)
+        {
+            var startIndex = 0;
+            string filename = null;
+            IOperation lastOperation = null;
 
             if (!inputArgs[0].StartsWith("/"))
             {
@@ -64,8 +73,8 @@ namespace BigFiles.CommandLine
                         .ToArray()
                 });
 
-
-            args.ToList().ForEach(op =>{
+            args.ToList().ForEach(op =>
+            {
                 Log.Debug("Operation: {name}, Args: {args}", op.name, op.args);
                 lastOperation = ParseToken(op.name, op.args, lastOperation);
             });

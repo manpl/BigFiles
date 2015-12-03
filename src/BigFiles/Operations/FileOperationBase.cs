@@ -12,7 +12,7 @@ namespace BigFiles.Operations
     public abstract class FileOperationBase : IOperation
     {
         private IOperation parent;
-        protected IOperation Parent
+        protected internal IOperation Parent
         {
             get
             {
