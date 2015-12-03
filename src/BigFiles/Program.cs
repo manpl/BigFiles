@@ -25,7 +25,7 @@ namespace BigFiles
             }
             catch (CommandLineException ex)
             {
-                Log.Error("Error: {message}",  ex.Message);
+                Log.Error("Error: {message}", ex.Message);
                 parser.PrintUsage();
             }
             catch (Exception ex)
@@ -40,13 +40,19 @@ namespace BigFiles
         private static void ConfigureLogging()
         {
             Log.Logger = new LoggerConfiguration()
-            .Enrich.With(new ThreadIdEnricher())
-            .WriteTo.Sink(new FileSink(@"bf.logs.json", new JsonFormatter(false, null, true), null), LogEventLevel.Verbose)
-            .WriteTo.RollingFile("bf.log", Serilog.Events.LogEventLevel.Verbose)
-                  .WriteTo.ColoredConsole(
-                  outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}")
-                  .MinimumLevel.Debug()
-                  .CreateLogger();
+                .Enrich.With(new ThreadIdEnricher())
+                .WriteTo.Sink(new FileSink(@"bf.logs.json", new JsonFormatter(false, null, true), null), LogEventLevel.Verbose)
+                .WriteTo.RollingFile("bf.log", Serilog.Events.LogEventLevel.Verbose)
+                .WriteTo.ColoredConsole(
+                      outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}", 
+#if !DEBUG
+                      restrictedToMinimumLevel: LogEventLevel.Error
+#else
+                      restrictedToMinimumLevel: LogEventLevel.Verbose
+#endif
+)
+                .MinimumLevel.Debug()
+                .CreateLogger();
         }
     }
 }

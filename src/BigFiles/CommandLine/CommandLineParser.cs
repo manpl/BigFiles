@@ -46,7 +46,6 @@ namespace BigFiles.CommandLine
                 startIndex = 0;
                 lastOperation = new CommandLineReader();
             }
-            filename = inputArgs[0];
             // skip filename
             var arguments = inputArgs.Skip(startIndex).ToArray();
 
