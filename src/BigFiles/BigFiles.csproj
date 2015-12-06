@@ -81,8 +81,11 @@
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
-  </Target>
+  </Target>-->
   <Target Name="AfterBuild">
+	<Message Text="Mergin output -> to $(OutputPath)bf.exe	" Importance="high" />
+	<Exec
+		WorkingDirectory="$(OutputPath)"
+		Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4 /out:bf.exe BigFiles.exe Serilog.dll Serilog.FullNetFx.dll System.IO.Abstractions.dll" />
   </Target>
-  -->
 </Project>
