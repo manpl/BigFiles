@@ -12,9 +12,9 @@ namespace BigFiles.Operations
             this.NoToSkip = int.Parse(noToSkip);
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
-            return this.Parent.ReadLines().Skip(NoToSkip);
+            return this.Parent.ReadTextChunk().Skip(NoToSkip);
         }
     }
 }

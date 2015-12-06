@@ -17,9 +17,9 @@ namespace BigFiles.Operations
             this.filter = new Regex(filterText, RegexOptions.Singleline);
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
-            foreach (var line in Parent.ReadLines())
+            foreach (var line in Parent.ReadTextChunk())
             {
                 if(filter.IsMatch(line.Content))
                 {

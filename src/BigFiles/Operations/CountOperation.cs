@@ -18,9 +18,9 @@ namespace BigFiles.Operations
             this.parent = parent;
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
-           foreach(var item in Parent.ReadLines())
+           foreach(var item in Parent.ReadTextChunk())
            {
                count++;
                yield return item;

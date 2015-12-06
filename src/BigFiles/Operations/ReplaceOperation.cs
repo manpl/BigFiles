@@ -19,9 +19,9 @@ namespace BigFiles.Operations
             this.to = to;
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
-            foreach (var line in Parent.ReadLines())
+            foreach (var line in Parent.ReadTextChunk())
             {
                 line.ReplaceContent(from, to);
                 yield return line;

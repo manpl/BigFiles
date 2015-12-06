@@ -15,9 +15,9 @@ namespace BigFiles.Operations
             this.NoToTake = int.Parse(noToTake);   
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
-            return this.Parent.ReadLines().Take(NoToTake);
+            return this.Parent.ReadTextChunk().Take(NoToTake);
         }
     }
 }

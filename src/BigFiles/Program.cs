@@ -21,7 +21,7 @@ namespace BigFiles
             try
             {
                 var operation = parser.Parse(args);
-                operation.ReadLines().ToList();
+                operation.ReadTextChunk().ToList();
             }
             catch (CommandLineException ex)
             {

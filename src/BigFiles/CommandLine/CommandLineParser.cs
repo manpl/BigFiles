@@ -4,9 +4,6 @@ using System.Linq;
 using System.Reflection;
 using Serilog;
 using System.Text.RegularExpressions;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace BigFiles.CommandLine
 {
@@ -78,7 +75,6 @@ namespace BigFiles.CommandLine
                 Log.Debug("Operation: {name}, Args: {args}", op.name, op.args);
                 lastOperation = ParseToken(op.name, op.args, lastOperation);
             });
-
             return lastOperation;
         }
 

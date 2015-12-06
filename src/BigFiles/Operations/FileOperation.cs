@@ -35,13 +35,13 @@ namespace BigFiles.Operations
             Path = path;
         }
 
-        public override IEnumerable<InputLine> ReadLines()
+        public override IEnumerable<InputLine> ReadTextChunk()
         {
             using (var writer = FileSystem.File.OpenWrite(Path))
             {
                 using (var streamWriter = new StreamWriter(writer))
                 {
-                    foreach (var line in Parent.ReadLines())
+                    foreach (var line in Parent.ReadTextChunk())
                     {
                         streamWriter.WriteLine(line.Content);
                         yield return line;

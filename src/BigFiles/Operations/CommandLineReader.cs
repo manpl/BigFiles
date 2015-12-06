@@ -7,7 +7,7 @@ namespace BigFiles.Operations
 {
     public class CommandLineReader : IOperation
     {
-        public IEnumerable<InputLine> ReadLines()
+        public IEnumerable<InputLine> ReadTextChunk()
         {
             string line = null;
             int no = 0;

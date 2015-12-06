@@ -39,7 +39,7 @@ namespace BigFiles.Operations
             }
         }
 
-        public IEnumerable<InputLine> ReadLines()
+        public IEnumerable<InputLine> ReadTextChunk()
         {
             string line;
             int lineNo = 0;

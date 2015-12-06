@@ -5,7 +5,7 @@ namespace BigFiles.Operations
 
     public interface IOperation
     {
-        IEnumerable<InputLine> ReadLines();
+        IEnumerable<InputLine> ReadTextChunk();
     }
 
     [Usage("/xx")]
@@ -34,6 +34,6 @@ namespace BigFiles.Operations
             Parent = parent;
         }
 
-        public abstract IEnumerable<InputLine> ReadLines();
+        public abstract IEnumerable<InputLine> ReadTextChunk();
     }
 }
