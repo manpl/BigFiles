@@ -1,14 +1,15 @@
-﻿using System.Text.RegularExpressions;
-namespace BigFiles
+﻿namespace BigFiles
 {
     public class InputLine
     {
-        public string Content { get; set; }
-        public int OrgLineNumber { get; set; }
-
-        public override string ToString()
+        public string Content { get; }
+        public int OrgLineNumber { get; }
+        public InputLine(string content, int lineNumber)
         {
-            return Content;
+            Content = content;
+            OrgLineNumber = lineNumber;
         }
+
+        public override string ToString() => Content;
     }
 }

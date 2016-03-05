@@ -26,8 +26,8 @@ namespace BigFiles.Operations
 
             foreach (var line in Parent.ReadTextChunk())
             {
-                line.Content = regex.Replace(line.Content, to);
-                yield return line;
+                var content = regex.Replace(line.Content, to);
+                yield return new InputLine(content, line.OrgLineNumber);
             }
         }
     }

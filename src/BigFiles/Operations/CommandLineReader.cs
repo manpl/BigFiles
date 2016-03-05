@@ -14,7 +14,7 @@ namespace BigFiles.Operations
 
             while ((line = Console.ReadLine()) != null)
             {
-                yield return new InputLine { Content = line, OrgLineNumber = no};
+                yield return new InputLine (line, no);
             }
         }
     }

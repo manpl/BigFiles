@@ -25,11 +25,11 @@ namespace BigFiles.CommandLine
             
             if(inputArgs == null)
             {
-                throw new ArgumentNullException("args");
+                throw new ArgumentNullException(nameof(inputArgs));
             }
             if (inputArgs.Length == 0)
             {
-                throw new ArgumentException("args");
+                throw new ArgumentException(nameof(inputArgs));
             }
 
             return ParseImpl(inputArgs);
@@ -99,7 +99,8 @@ namespace BigFiles.CommandLine
                     foreach (var c in availableConstructors)
                     {
                         var args = c.GetParameters().Skip(1).Select(arg => arg.Name).ToArray();
-                        hint += String.Format("\nAvailable set of arguments for {0} is {1}", operationType.Name, String.Join(",", args));
+                        var argsCombined = String.Join(",", args);
+                        hint += $"\nAvailable set of arguments for {operationType.Name} is {argsCombined}";
                     }
 
                     throw new CommandLineException(message, hint, ex);

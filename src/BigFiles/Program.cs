@@ -1,6 +1,5 @@
 ﻿using BigFiles.CommandLine;
 using BigFiles.Logging;
-using BigFiles.Operations;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
@@ -42,7 +41,7 @@ namespace BigFiles
             Log.Logger = new LoggerConfiguration()
                 .Enrich.With(new ThreadIdEnricher())
                 .WriteTo.Sink(new FileSink(@"bf.logs.json", new JsonFormatter(false, null, true), null), LogEventLevel.Verbose)
-                .WriteTo.RollingFile("bf.log", Serilog.Events.LogEventLevel.Verbose)
+                .WriteTo.RollingFile("bf.log", LogEventLevel.Verbose)
                 .WriteTo.ColoredConsole(
                       outputTemplate: "{Timestamp:HH:mm} [{Level}] ({ThreadId}) {Message}{NewLine}{Exception}", 
 #if !DEBUG

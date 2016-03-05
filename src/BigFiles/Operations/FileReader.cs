@@ -25,7 +25,7 @@ namespace BigFiles.Operations
 
         static FileReader()
         {
-            FileSystem = new System.IO.Abstractions.FileSystem();
+            FileSystem = new FileSystem();
         }
 
         public FileReader(string path)
@@ -50,7 +50,7 @@ namespace BigFiles.Operations
                 {
                     while ((line = reader.ReadLine()) != null)
                     {
-                        yield return new InputLine() { Content = line, OrgLineNumber = lineNo++ };
+                        yield return new InputLine(line,lineNo++);
                     }
                 }
             }

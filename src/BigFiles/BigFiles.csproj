@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BigFiles</RootNamespace>
     <AssemblyName>BigFiles</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLine\CommandLineException.cs" />
     <Compile Include="CommandLine\CommandLineParser.cs" />
     <Compile Include="Operations\CommandLineReader.cs" />
     <Compile Include="CommandLine\ParsingException.cs" />
@@ -83,9 +84,7 @@
   <Target Name="BeforeBuild">
   </Target>-->
   <Target Name="AfterBuild">
-	<Message Text="Mergin output -> to $(OutputPath)bf.exe	" Importance="high" />
-	<Exec
-		WorkingDirectory="$(OutputPath)"
-		Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4 /out:bf.exe BigFiles.exe Serilog.dll Serilog.FullNetFx.dll System.IO.Abstractions.dll" />
+    <Message Text="Mergin output -&gt; to $(OutputPath)bf.exe	" Importance="high" />
+    <Exec WorkingDirectory="$(OutputPath)" Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4 /out:bf.exe BigFiles.exe Serilog.dll Serilog.FullNetFx.dll System.IO.Abstractions.dll" />
   </Target>
 </Project>

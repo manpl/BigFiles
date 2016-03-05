@@ -31,7 +31,7 @@ namespace BigFiles.Operations
         public FileOperation(IOperation parent, String path)
             : base(parent)
         {
-            FileSystem = new System.IO.Abstractions.FileSystem();
+            FileSystem = new FileSystem();
             Path = path;
         }
 
